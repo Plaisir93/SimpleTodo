@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         lvItems = (ListView) findViewById(R.id.lvItems);
         lvItems.setAdapter(itemsAdapter);
 
-        //method to wire long click
+        //method to wire click events
         setupListViewListener();
     }
 
@@ -91,7 +91,18 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         // if the edit activity completed ok
         if (resultCode == RESULT_OK && requestCode == EDIT_REQUEST_CODE){
-
+            // extract updated item from result intent extras
+            String updatedItem = data.getExtras().getString(ITEM_TEXT);
+            // extract original position of edited item
+            int position = data.getExtras().getInt(ITEM_POSITION);
+            // update the model with the new item text at the edited position
+            items.set(position, updatedItem);
+            // notify the adapter that the model has been changed
+            itemsAdapter.notifyDataSetChanged();
+            // persist the changed model
+            writeItems();
+            // notify the user that the operation completed ok
+            Toast.makeText(getApplicationContext(), ""+updatedItem+" updated successfully", Toast.LENGTH_SHORT).show();
         }
     }
 

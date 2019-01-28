@@ -39,7 +39,7 @@ public class EditItemActivity extends AppCompatActivity {
         i.putExtra(ITEM_POSITION, position);
         // set the intent as the result of the activity
         setResult(RESULT_OK, i);
-        // close the activity and redirect to main
+        // close the activity and redirect to MainActivity
         finish();
     }
 }
